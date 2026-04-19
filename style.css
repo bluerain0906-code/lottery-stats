@@ -260,19 +260,14 @@ body {
 }
 .primary:active { background: #1d4ed8; }
 .primary:disabled { background: #9ca3af; cursor: not-allowed; }
-.locked {
-  display: none;
-  margin-top: 10px;
-  padding: 12px;
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  color: #92400e;
-}
-.generator.locked-mode .primary { display: none; }
-.generator.locked-mode .locked { display: block; }
+.generator.locked-mode .admin-only { display: none; }
+.generator:not(.locked-mode) .user-only { display: none; }
 .generator.locked-mode .admin-row { display: none; }
+.gen-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .admin-row {
   display: flex;
   align-items: center;
@@ -300,7 +295,6 @@ body {
   font-size: 0.9rem;
 }
 .line-login-btn:hover { background: #05b24c; }
-.locked p { margin: 0 0 10px; }
 .ad-gate-btn {
   display: block;
   width: 100%;

@@ -73,14 +73,13 @@
             <span id="adminWho" class="admin-who"></span>
             <a href="/auth/logout" class="logout-link">登出</a>
           </div>
-          <button id="genBtn" class="primary">統計取樣</button>
-          <div class="locked" id="genLocked">
-            <p>觀看一則廣告即可免費取得 3 組參考號碼組合。</p>
-            <button id="adGateBtn" class="ad-gate-btn">📺 看廣告取樣</button>
-            <p class="admin-hint">
-              <a href="/auth/line/login" class="admin-login-link">管理員以 LINE 登入（無廣告）</a>
-            </p>
+          <div class="gen-btn-group">
+            <button id="genBtn" class="primary admin-only">統計取樣（管理員）</button>
+            <button id="adGateBtn" class="ad-gate-btn">📺 看廣告取樣（免費）</button>
           </div>
+          <p class="admin-hint user-only">
+            <a href="/auth/line/login" class="admin-login-link">管理員以 LINE 登入（無廣告）</a>
+          </p>
           <div id="genResult" class="gen-result"></div>
         </section>
       </section>
