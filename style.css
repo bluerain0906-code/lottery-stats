@@ -315,21 +315,19 @@ body {
   transition: background 0.15s;
 }
 .ad-gate-btn:hover { background: #ea580c; }
-.locked-divider {
-  display: flex;
-  align-items: center;
+.admin-hint {
+  margin: 12px 0 0 !important;
   text-align: center;
+  font-size: 0.78rem;
   color: #9ca3af;
-  font-size: 0.8rem;
-  margin: 14px 0 12px;
 }
-.locked-divider::before,
-.locked-divider::after {
-  content: '';
-  flex: 1;
-  border-top: 1px solid #e5e7eb;
+.admin-login-link {
+  color: #6b7280;
+  text-decoration: none;
+  border-bottom: 1px dashed #d1d5db;
+  padding-bottom: 1px;
 }
-.locked-divider span { padding: 0 10px; }
+.admin-login-link:hover { color: #06c755; border-bottom-color: #06c755; }
 
 /* Ad Modal */
 .ad-modal {
