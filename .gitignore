@@ -1,0 +1,26 @@
+# 原始截圖（私人資料，不上傳）
+lineqrcode.jpg
+*.screenshot.jpg
+
+# 爬蟲執行日誌
+scraper.log
+*.log
+
+# Python 編譯產物
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# 編輯器/系統
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 臨時
+*.tmp
+*.bak
+line-qr-try*.png
