@@ -144,10 +144,14 @@ function pickUnique(pool, k) {
   return out.sort((a, b) => a - b);
 }
 
-function generate() {
+function generate(mode = 'user') {
   if (!rawData) return;
   const game = GAMES[currentGame];
-  const records = filterByRange(rawData[currentGame] || [], currentRange);
+  // 管理員：全歷史 + 前 20 名（資料完整、選項多）
+  // 一般用戶：全歷史 + 前 10 名（熱門集中）
+  const poolSize = mode === 'admin' ? 20 : 10;
+
+  const records = filterByRange(rawData[currentGame] || [], 'all');
   if (!records.length) {
     document.getElementById('genResult').innerHTML =
       '<p class="hint">目前無資料可統計。</p>';
@@ -156,11 +160,15 @@ function generate() {
 
   const mainCounts = countFreq(records, game.getMain, game.mainRange);
   const specialCounts = countFreq(records, game.getSpecial, game.specialRange);
-  const mainPool = topN(mainCounts, 15);
+  const mainPool = topN(mainCounts, poolSize);
   const specialTop = topN(specialCounts, Math.min(8, game.specialRange[1]));
 
   const container = document.getElementById('genResult');
   container.innerHTML = '';
+  const modeLabel = mode === 'admin'
+    ? `<p class="gen-mode-label">管理員：全歷史 · 頻率前 20 名</p>`
+    : `<p class="gen-mode-label">免費版：全歷史 · 頻率前 10 名</p>`;
+  container.insertAdjacentHTML('beforeend', modeLabel);
   for (let i = 0; i < 3; i++) {
     const main = pickUnique(mainPool, 6);
     const special = specialTop[Math.floor(Math.random() * specialTop.length)];
@@ -210,7 +218,7 @@ document.getElementById('range').addEventListener('change', e => {
   render();
 });
 
-document.getElementById('genBtn').addEventListener('click', generate);
+document.getElementById('genBtn').addEventListener('click', () => generate('admin'));
 
 const AD_SECONDS = 5;
 function openAdGate() {
@@ -252,7 +260,7 @@ function openAdGate() {
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     closeBtn.removeEventListener('click', done);
-    generate();
+    generate('user');
   };
   closeBtn.addEventListener('click', done);
 }
