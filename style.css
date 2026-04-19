@@ -291,7 +291,6 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-top: 10px;
   padding: 10px 18px;
   background: #06c755;
   color: #fff !important;
@@ -301,7 +300,111 @@ body {
   font-size: 0.9rem;
 }
 .line-login-btn:hover { background: #05b24c; }
-.locked p { margin: 0 0 6px; }
+.locked p { margin: 0 0 10px; }
+.ad-gate-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: #f97316;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ad-gate-btn:hover { background: #ea580c; }
+.locked-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.8rem;
+  margin: 14px 0 12px;
+}
+.locked-divider::before,
+.locked-divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #e5e7eb;
+}
+.locked-divider span { padding: 0 10px; }
+
+/* Ad Modal */
+.ad-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.ad-modal.open { display: flex; }
+.ad-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+}
+.ad-modal-box {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  padding: 0;
+  width: calc(100% - 24px);
+  max-width: 360px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+.ad-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #f3f4f6;
+  font-size: 0.8rem;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+}
+.ad-modal-title { font-weight: 600; }
+.ad-countdown { color: #f97316; font-variant-numeric: tabular-nums; }
+.ad-content {
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #fafafa;
+}
+.ad-placeholder-box {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.95rem;
+  padding: 40px 20px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  width: 100%;
+}
+.ad-placeholder-box small { display: block; margin-top: 6px; font-size: 0.75rem; }
+.ad-close-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ad-close-btn:disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+.ad-close-btn:not(:disabled):hover { background: #1d4ed8; }
 .gen-result {
   margin-top: 12px;
   display: flex;

@@ -145,7 +145,6 @@ function pickUnique(pool, k) {
 }
 
 function generate() {
-  if (!adminState.isAdmin) return;
   if (!rawData) return;
   const game = GAMES[currentGame];
   const records = filterByRange(rawData[currentGame] || [], currentRange);
@@ -212,6 +211,54 @@ document.getElementById('range').addEventListener('change', e => {
 });
 
 document.getElementById('genBtn').addEventListener('click', generate);
+
+const AD_SECONDS = 5;
+function openAdGate() {
+  const modal = document.getElementById('adModal');
+  const closeBtn = document.getElementById('adCloseBtn');
+  const countdown = document.getElementById('adCountdown');
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  // 若已接入 AdSense，此處觸發廣告載入（目前為佔位）
+  try {
+    if (window.adsbygoogle && document.querySelector('#adContent .adsbygoogle')) {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    }
+  } catch (_) {}
+
+  let remaining = AD_SECONDS;
+  closeBtn.disabled = true;
+  closeBtn.textContent = '請稍候…';
+  countdown.textContent = `${remaining} 秒後可關閉`;
+
+  const timer = setInterval(() => {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(timer);
+      countdown.textContent = '';
+      closeBtn.disabled = false;
+      closeBtn.textContent = '關閉廣告並查看結果';
+    } else {
+      countdown.textContent = `${remaining} 秒後可關閉`;
+    }
+  }, 1000);
+
+  const done = () => {
+    if (closeBtn.disabled) return;
+    clearInterval(timer);
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    closeBtn.removeEventListener('click', done);
+    generate();
+  };
+  closeBtn.addEventListener('click', done);
+}
+
+const adBtn = document.getElementById('adGateBtn');
+if (adBtn) adBtn.addEventListener('click', openAdGate);
 
 document.querySelector('.tabs').dataset.idx = '0';
 

@@ -75,7 +75,9 @@
           </div>
           <button id="genBtn" class="primary">統計取樣</button>
           <div class="locked" id="genLocked">
-            <p>此功能為管理員工具，一般使用者請使用上方圖表自行分析。</p>
+            <p>觀看一則廣告即可免費取樣；管理員可登入後直接使用。</p>
+            <button id="adGateBtn" class="ad-gate-btn">📺 看廣告取樣</button>
+            <div class="locked-divider"><span>或</span></div>
             <a href="/auth/line/login" class="line-login-btn">
               <span class="line-icon">L</span> 管理員以 LINE 登入
             </a>
@@ -214,6 +216,24 @@
     <p>聯絡我們：LINE <b>AIRORTON</b></p>
     <p class="copyright">© 2026 彩券數據站</p>
   </footer>
+
+  <div class="ad-modal" id="adModal" aria-hidden="true">
+    <div class="ad-modal-backdrop"></div>
+    <div class="ad-modal-box">
+      <div class="ad-modal-header">
+        <span class="ad-modal-title">廣告</span>
+        <span class="ad-countdown" id="adCountdown">5 秒後可關閉</span>
+      </div>
+      <div class="ad-content" id="adContent">
+        <!-- AdSense 通過後置換為 <ins class="adsbygoogle">，目前為佔位 -->
+        <div class="ad-placeholder-box">
+          <div>廣告區</div>
+          <small>（待 AdSense 通過後此處顯示實際廣告）</small>
+        </div>
+      </div>
+      <button class="ad-close-btn" id="adCloseBtn" disabled>請稍候…</button>
+    </div>
+  </div>
 
   <script src="app.js"></script>
   <script src="line-modal.js"></script>
