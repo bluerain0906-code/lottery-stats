@@ -409,16 +409,6 @@ body {
   flex-direction: column;
   gap: 8px;
 }
-.gen-mode-label {
-  margin: 0 0 2px;
-  font-size: 0.8rem;
-  color: #059669;
-  font-weight: 600;
-  background: #ecfdf5;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border-left: 3px solid #10b981;
-}
 .gen-set {
   background: #f3f4f6;
   border-radius: 8px;

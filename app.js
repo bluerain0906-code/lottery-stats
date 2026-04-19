@@ -144,16 +144,10 @@ function pickUnique(pool, k) {
   return out.sort((a, b) => a - b);
 }
 
-function generate(mode = 'user') {
+function generate() {
   if (!rawData) return;
   const game = GAMES[currentGame];
-  // 管理員：近三年、前 10 名（更集中）
-  // 一般用戶：全歷史、前 20 名（較分散）
-  const config = mode === 'admin'
-    ? { range: '3y', poolSize: 10 }
-    : { range: 'all', poolSize: 20 };
-
-  const records = filterByRange(rawData[currentGame] || [], config.range);
+  const records = filterByRange(rawData[currentGame] || [], currentRange);
   if (!records.length) {
     document.getElementById('genResult').innerHTML =
       '<p class="hint">目前無資料可統計。</p>';
@@ -162,15 +156,11 @@ function generate(mode = 'user') {
 
   const mainCounts = countFreq(records, game.getMain, game.mainRange);
   const specialCounts = countFreq(records, game.getSpecial, game.specialRange);
-  const mainPool = topN(mainCounts, config.poolSize);
+  const mainPool = topN(mainCounts, 15);
   const specialTop = topN(specialCounts, Math.min(8, game.specialRange[1]));
 
   const container = document.getElementById('genResult');
   container.innerHTML = '';
-  const modeLabel = mode === 'admin'
-    ? `<p class="gen-mode-label">管理員模式：近三年頻率前 10 名取樣</p>`
-    : `<p class="gen-mode-label">免費模式：全歷史頻率前 20 名取樣</p>`;
-  container.insertAdjacentHTML('beforeend', modeLabel);
   for (let i = 0; i < 3; i++) {
     const main = pickUnique(mainPool, 6);
     const special = specialTop[Math.floor(Math.random() * specialTop.length)];
@@ -220,7 +210,7 @@ document.getElementById('range').addEventListener('change', e => {
   render();
 });
 
-document.getElementById('genBtn').addEventListener('click', () => generate('admin'));
+document.getElementById('genBtn').addEventListener('click', generate);
 
 const AD_SECONDS = 5;
 function openAdGate() {
@@ -262,7 +252,7 @@ function openAdGate() {
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     closeBtn.removeEventListener('click', done);
-    generate('user');
+    generate();
   };
   closeBtn.addEventListener('click', done);
 }
