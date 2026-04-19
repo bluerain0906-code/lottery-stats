@@ -1,6 +1,3 @@
-const ADMIN_KEY = 'airorton2026'; // ⚠️ 改成你的密鑰
-const STORAGE_KEY = 'lotto_admin_v1';
-
 const GAMES = {
   lotto649: {
     name: '大樂透',
@@ -28,29 +25,27 @@ let currentRange = 'all';
 let mainChart = null;
 let specialChart = null;
 
-function isAdmin() {
-  return localStorage.getItem(STORAGE_KEY) === '1';
-}
+let adminState = { isAdmin: false, name: null };
 
-function checkAdminParam() {
-  const params = new URLSearchParams(location.search);
-  const k = params.get('admin');
-  if (k === ADMIN_KEY) {
-    localStorage.setItem(STORAGE_KEY, '1');
-    history.replaceState({}, '', location.pathname);
-    alert('管理員模式已啟用（本機永久記住）');
-  } else if (params.get('logout') === '1') {
-    localStorage.removeItem(STORAGE_KEY);
-    history.replaceState({}, '', location.pathname);
-    alert('已登出管理員');
+async function fetchAdminState() {
+  try {
+    const r = await fetch('/api/me', { credentials: 'same-origin' });
+    if (r.ok) adminState = await r.json();
+  } catch {
+    adminState = { isAdmin: false };
   }
 }
 
 function applyAdminUI() {
   const card = document.getElementById('generatorCard');
   if (!card) return;
-  if (isAdmin()) card.classList.remove('locked-mode');
-  else card.classList.add('locked-mode');
+  if (adminState.isAdmin) {
+    card.classList.remove('locked-mode');
+    const who = document.getElementById('adminWho');
+    if (who) who.textContent = adminState.name ? `管理員：${adminState.name}` : '';
+  } else {
+    card.classList.add('locked-mode');
+  }
 }
 
 async function loadData() {
@@ -150,7 +145,7 @@ function pickUnique(pool, k) {
 }
 
 function generate() {
-  if (!isAdmin()) return;
+  if (!adminState.isAdmin) return;
   if (!rawData) return;
   const game = GAMES[currentGame];
   const records = filterByRange(rawData[currentGame] || [], currentRange);
@@ -218,10 +213,14 @@ document.getElementById('range').addEventListener('change', e => {
 
 document.getElementById('genBtn').addEventListener('click', generate);
 
-checkAdminParam();
-applyAdminUI();
 document.querySelector('.tabs').dataset.idx = '0';
 
-loadData().catch(err => {
-  document.getElementById('heroMeta').textContent = `資料載入失敗：${err.message}`;
-});
+(async () => {
+  await fetchAdminState();
+  applyAdminUI();
+  try {
+    await loadData();
+  } catch (err) {
+    document.getElementById('heroMeta').textContent = `資料載入失敗：${err.message}`;
+  }
+})();

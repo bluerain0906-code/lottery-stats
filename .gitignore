@@ -24,3 +24,9 @@ Thumbs.db
 *.tmp
 *.bak
 line-qr-try*.png
+
+# Node.js
+node_modules/
+npm-debug.log
+.env
+.env.local

@@ -1,0 +1,17 @@
+{
+  "name": "lottery-stats",
+  "version": "1.0.0",
+  "description": "台灣彩券歷史統計站（含 LINE OAuth 管理員驗證）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

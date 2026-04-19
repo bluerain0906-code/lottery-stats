@@ -69,9 +69,16 @@
         <section class="card generator" id="generatorCard">
           <h2>統計取樣</h2>
           <p class="hint">依歷史出現頻率進行加權取樣，輸出 3 組參考組合。</p>
+          <div class="admin-row">
+            <span id="adminWho" class="admin-who"></span>
+            <a href="/auth/logout" class="logout-link">登出</a>
+          </div>
           <button id="genBtn" class="primary">統計取樣</button>
           <div class="locked" id="genLocked">
-            此功能為管理員工具，一般使用者請使用上方圖表自行分析。
+            <p>此功能為管理員工具，一般使用者請使用上方圖表自行分析。</p>
+            <a href="/auth/line/login" class="line-login-btn">
+              <span class="line-icon">L</span> 管理員以 LINE 登入
+            </a>
           </div>
           <div id="genResult" class="gen-result"></div>
         </section>

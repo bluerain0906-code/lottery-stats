@@ -272,6 +272,36 @@ body {
 }
 .generator.locked-mode .primary { display: none; }
 .generator.locked-mode .locked { display: block; }
+.generator.locked-mode .admin-row { display: none; }
+.admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+}
+.admin-who { color: #059669; font-weight: 600; }
+.logout-link {
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+.logout-link:hover { color: #111; text-decoration: underline; }
+.line-login-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 18px;
+  background: #06c755;
+  color: #fff !important;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.line-login-btn:hover { background: #05b24c; }
+.locked p { margin: 0 0 6px; }
 .gen-result {
   margin-top: 12px;
   display: flex;
