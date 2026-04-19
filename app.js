@@ -144,13 +144,22 @@ function pickUnique(pool, k) {
   return out.sort((a, b) => a - b);
 }
 
+function renderSet(container, numbers, special, labelText, game) {
+  const set = document.createElement('div');
+  set.className = 'gen-set';
+  const balls = numbers.map(n => `<span class="ball">${n}</span>`).join('');
+  const specialBall = `<span class="ball ${game.specialBallClass}">${special}</span>`;
+  set.innerHTML = `<span class="label">${labelText}</span>${balls}<span class="label" style="margin-left:6px">特</span>${specialBall}`;
+  container.appendChild(set);
+}
+
+function pickRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
 function generate(mode = 'user') {
   if (!rawData) return;
   const game = GAMES[currentGame];
-  // 管理員：全歷史 + 前 20 名（資料完整、選項多）
-  // 一般用戶：全歷史 + 前 10 名（熱門集中）
-  const poolSize = mode === 'admin' ? 20 : 10;
-
   const records = filterByRange(rawData[currentGame] || [], 'all');
   if (!records.length) {
     document.getElementById('genResult').innerHTML =
@@ -160,24 +169,39 @@ function generate(mode = 'user') {
 
   const mainCounts = countFreq(records, game.getMain, game.mainRange);
   const specialCounts = countFreq(records, game.getSpecial, game.specialRange);
-  const mainPool = topN(mainCounts, poolSize);
   const specialTop = topN(specialCounts, Math.min(8, game.specialRange[1]));
 
   const container = document.getElementById('genResult');
   container.innerHTML = '';
-  const modeLabel = mode === 'admin'
-    ? `<p class="gen-mode-label">管理員：全歷史 · 頻率前 20 名</p>`
-    : `<p class="gen-mode-label">免費版：全歷史 · 頻率前 10 名</p>`;
-  container.insertAdjacentHTML('beforeend', modeLabel);
-  for (let i = 0; i < 3; i++) {
-    const main = pickUnique(mainPool, 6);
-    const special = specialTop[Math.floor(Math.random() * specialTop.length)];
-    const set = document.createElement('div');
-    set.className = 'gen-set';
-    const balls = main.map(n => `<span class="ball">${n}</span>`).join('');
-    const specialBall = `<span class="ball ${game.specialBallClass}">${special}</span>`;
-    set.innerHTML = `<span class="label">第 ${i + 1} 組</span>${balls}<span class="label" style="margin-left:6px">特</span>${specialBall}`;
-    container.appendChild(set);
+
+  if (mode === 'admin') {
+    const top6 = topN(mainCounts, 6);
+    const top10 = topN(mainCounts, 10);
+    const top15 = topN(mainCounts, 15);
+    const fixedSpecial = specialTop[0];
+
+    container.insertAdjacentHTML(
+      'beforeend',
+      `<p class="gen-mode-label">管理員：第 1 組=固定前 6 · 第 2 組=前 10 隨機 · 第 3 組=前 15 隨機</p>`
+    );
+    renderSet(container, [...top6].sort((a, b) => a - b), fixedSpecial, '第 1 組 · 固定', game);
+    renderSet(container, pickUnique(top10, 6), pickRandom(specialTop), '第 2 組 · 前10隨機', game);
+    renderSet(container, pickUnique(top15, 6), pickRandom(specialTop), '第 3 組 · 前15隨機', game);
+  } else {
+    const pool = topN(mainCounts, 10);
+    container.insertAdjacentHTML(
+      'beforeend',
+      `<p class="gen-mode-label">免費版：全歷史 · 頻率前 10 名</p>`
+    );
+    for (let i = 0; i < 3; i++) {
+      renderSet(
+        container,
+        pickUnique(pool, 6),
+        pickRandom(specialTop),
+        `第 ${i + 1} 組`,
+        game
+      );
+    }
   }
 }
 
