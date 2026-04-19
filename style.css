@@ -283,16 +283,17 @@ body {
 }
 .logout-link:hover { color: #111; text-decoration: underline; }
 .line-login-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 10px 18px;
+  padding: 14px;
   background: #06c755;
   color: #fff !important;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 .line-login-btn:hover { background: #05b24c; }
 .ad-gate-btn {
@@ -309,19 +310,6 @@ body {
   transition: background 0.15s;
 }
 .ad-gate-btn:hover { background: #ea580c; }
-.admin-hint {
-  margin: 12px 0 0 !important;
-  text-align: center;
-  font-size: 0.78rem;
-  color: #9ca3af;
-}
-.admin-login-link {
-  color: #6b7280;
-  text-decoration: none;
-  border-bottom: 1px dashed #d1d5db;
-  padding-bottom: 1px;
-}
-.admin-login-link:hover { color: #06c755; border-bottom-color: #06c755; }
 
 /* Ad Modal */
 .ad-modal {
