@@ -182,7 +182,7 @@ function pickRandom(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function generate(mode = 'user') {
+function generate() {
   if (!rawData) return;
   const game = GAMES[currentGame];
   const pick = game.mainPick;
@@ -202,38 +202,20 @@ function generate(mode = 'user') {
     ? topN(specialCounts, Math.min(8, game.specialRange[1]))
     : [];
 
+  const topFixed = topN(mainCounts, pick);
+  const top10 = topN(mainCounts, 10);
+  const top15 = topN(mainCounts, 15);
+  const fixedSpecial = hasSpecial ? specialTop[0] : null;
+
   const container = document.getElementById('genResult');
   container.innerHTML = '';
-
-  if (mode === 'admin') {
-    const topFixed = topN(mainCounts, pick);
-    const top10 = topN(mainCounts, 10);
-    const top15 = topN(mainCounts, 15);
-    const fixedSpecial = hasSpecial ? specialTop[0] : null;
-
-    container.insertAdjacentHTML(
-      'beforeend',
-      `<p class="gen-mode-label">管理員：第 1 組=固定前 ${pick} · 第 2 組=前 10 隨機 · 第 3 組=前 15 隨機</p>`
-    );
-    renderSet(container, [...topFixed].sort((a, b) => a - b), fixedSpecial, '第 1 組 · 固定', game);
-    renderSet(container, pickUnique(top10, pick), hasSpecial ? pickRandom(specialTop) : null, '第 2 組 · 前10隨機', game);
-    renderSet(container, pickUnique(top15, pick), hasSpecial ? pickRandom(specialTop) : null, '第 3 組 · 前15隨機', game);
-  } else {
-    const pool = topN(mainCounts, 10);
-    container.insertAdjacentHTML(
-      'beforeend',
-      `<p class="gen-mode-label">免費版：全歷史 · 頻率前 10 名</p>`
-    );
-    for (let i = 0; i < 3; i++) {
-      renderSet(
-        container,
-        pickUnique(pool, pick),
-        hasSpecial ? pickRandom(specialTop) : null,
-        `第 ${i + 1} 組`,
-        game
-      );
-    }
-  }
+  container.insertAdjacentHTML(
+    'beforeend',
+    `<p class="gen-mode-label">全歷史 · 第 1 組=固定前 ${pick} · 第 2 組=前 10 隨機 · 第 3 組=前 15 隨機</p>`
+  );
+  renderSet(container, [...topFixed].sort((a, b) => a - b), fixedSpecial, '第 1 組 · 固定', game);
+  renderSet(container, pickUnique(top10, pick), hasSpecial ? pickRandom(specialTop) : null, '第 2 組 · 前10隨機', game);
+  renderSet(container, pickUnique(top15, pick), hasSpecial ? pickRandom(specialTop) : null, '第 3 組 · 前15隨機', game);
 }
 
 function showAnalysis(game) {
@@ -273,7 +255,7 @@ document.getElementById('range').addEventListener('change', e => {
   render();
 });
 
-document.getElementById('genBtn').addEventListener('click', () => generate('admin'));
+document.getElementById('genBtn').addEventListener('click', () => generate());
 
 const AD_SECONDS = 5;
 function openAdGate() {
@@ -315,7 +297,7 @@ function openAdGate() {
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     closeBtn.removeEventListener('click', done);
-    generate('user');
+    generate();
   };
   closeBtn.addEventListener('click', done);
 }
