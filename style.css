@@ -133,7 +133,7 @@ body {
   margin: 0 auto;
 }
 @media (min-width: 640px) {
-  .cta-group { flex-direction: row; max-width: 520px; }
+  .cta-group { flex-direction: row; max-width: 620px; }
 }
 .cta {
   flex: 1;
@@ -183,8 +183,8 @@ body {
 .tab {
   position: relative;
   z-index: 1;
-  min-width: 96px;
-  padding: 8px 20px;
+  min-width: 80px;
+  padding: 8px 16px;
   background: transparent;
   border: none;
   font-size: 0.95rem;
@@ -199,7 +199,7 @@ body {
   position: absolute;
   top: 4px;
   left: 4px;
-  width: calc(50% - 4px);
+  width: calc(33.333% - 3px);
   height: calc(100% - 8px);
   background: #fff;
   border-radius: 999px;
@@ -208,6 +208,7 @@ body {
   z-index: 0;
 }
 .tabs[data-idx="1"] .tab-indicator { transform: translateX(100%); }
+.tabs[data-idx="2"] .tab-indicator { transform: translateX(200%); }
 
 /* Cards */
 .card {

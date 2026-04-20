@@ -2,6 +2,7 @@ const GAMES = {
   lotto649: {
     name: '大樂透',
     mainRange: [1, 49],
+    mainPick: 6,
     specialLabel: '特別號出現次數（與一般號同池 1-49）',
     getMain: r => r.numbers,
     getSpecial: r => r.special,
@@ -11,11 +12,22 @@ const GAMES = {
   super_lotto: {
     name: '威力彩',
     mainRange: [1, 38],
+    mainPick: 6,
     specialLabel: '第二區出現次數（1-8）',
     getMain: r => r.first_area,
     getSpecial: r => r.second_area,
     specialRange: [1, 8],
     specialBallClass: 'second',
+  },
+  daily_cash: {
+    name: '今彩539',
+    mainRange: [1, 39],
+    mainPick: 5,
+    specialLabel: null,
+    getMain: r => r.numbers,
+    getSpecial: null,
+    specialRange: null,
+    specialBallClass: null,
   },
 };
 
@@ -53,8 +65,9 @@ async function loadData() {
   rawData = await res.json();
   const lottoN = (rawData.lotto649 || []).length;
   const superN = (rawData.super_lotto || []).length;
+  const dailyN = (rawData.daily_cash || []).length;
   document.getElementById('heroMeta').textContent =
-    `目前已收錄：大樂透 ${lottoN} 期、威力彩 ${superN} 期 · 最後更新 ${rawData.updated_at || '—'}`;
+    `目前已收錄：大樂透 ${lottoN} 期、威力彩 ${superN} 期、今彩539 ${dailyN} 期 · 最後更新 ${rawData.updated_at || '—'}`;
   render();
 }
 
@@ -106,23 +119,33 @@ function render() {
   const records = filterByRange(rawData[currentGame] || [], currentRange);
 
   document.getElementById('meta').textContent = `共 ${records.length} 期`;
-  document.getElementById('specialTitle').textContent = game.specialLabel;
 
   const mainCounts = countFreq(records, game.getMain, game.mainRange);
-  const specialCounts = countFreq(records, game.getSpecial, game.specialRange);
-
   mainChart = renderChart(
     document.getElementById('mainChart').getContext('2d'),
     mainChart,
     mainCounts,
     '#2563eb'
   );
-  specialChart = renderChart(
-    document.getElementById('specialChart').getContext('2d'),
-    specialChart,
-    specialCounts,
-    game.specialBallClass === 'second' ? '#ef4444' : '#f59e0b'
-  );
+
+  const specialCard = document.getElementById('specialCard');
+  if (game.getSpecial && game.specialRange) {
+    specialCard.style.display = '';
+    document.getElementById('specialTitle').textContent = game.specialLabel;
+    const specialCounts = countFreq(records, game.getSpecial, game.specialRange);
+    specialChart = renderChart(
+      document.getElementById('specialChart').getContext('2d'),
+      specialChart,
+      specialCounts,
+      game.specialBallClass === 'second' ? '#ef4444' : '#f59e0b'
+    );
+  } else {
+    specialCard.style.display = 'none';
+    if (specialChart) {
+      specialChart.destroy();
+      specialChart = null;
+    }
+  }
 
   document.getElementById('genResult').innerHTML = '';
 }
@@ -148,8 +171,10 @@ function renderSet(container, numbers, special, labelText, game) {
   const set = document.createElement('div');
   set.className = 'gen-set';
   const balls = numbers.map(n => `<span class="ball">${n}</span>`).join('');
-  const specialBall = `<span class="ball ${game.specialBallClass}">${special}</span>`;
-  set.innerHTML = `<span class="label">${labelText}</span>${balls}<span class="label" style="margin-left:6px">特</span>${specialBall}`;
+  const specialPart = special !== null && special !== undefined
+    ? `<span class="label" style="margin-left:6px">特</span><span class="ball ${game.specialBallClass}">${special}</span>`
+    : '';
+  set.innerHTML = `<span class="label">${labelText}</span>${balls}${specialPart}`;
   container.appendChild(set);
 }
 
@@ -160,6 +185,7 @@ function pickRandom(arr) {
 function generate(mode = 'user') {
   if (!rawData) return;
   const game = GAMES[currentGame];
+  const pick = game.mainPick;
   const records = filterByRange(rawData[currentGame] || [], 'all');
   if (!records.length) {
     document.getElementById('genResult').innerHTML =
@@ -168,25 +194,30 @@ function generate(mode = 'user') {
   }
 
   const mainCounts = countFreq(records, game.getMain, game.mainRange);
-  const specialCounts = countFreq(records, game.getSpecial, game.specialRange);
-  const specialTop = topN(specialCounts, Math.min(8, game.specialRange[1]));
+  const hasSpecial = !!game.getSpecial;
+  const specialCounts = hasSpecial
+    ? countFreq(records, game.getSpecial, game.specialRange)
+    : null;
+  const specialTop = hasSpecial
+    ? topN(specialCounts, Math.min(8, game.specialRange[1]))
+    : [];
 
   const container = document.getElementById('genResult');
   container.innerHTML = '';
 
   if (mode === 'admin') {
-    const top6 = topN(mainCounts, 6);
+    const topFixed = topN(mainCounts, pick);
     const top10 = topN(mainCounts, 10);
     const top15 = topN(mainCounts, 15);
-    const fixedSpecial = specialTop[0];
+    const fixedSpecial = hasSpecial ? specialTop[0] : null;
 
     container.insertAdjacentHTML(
       'beforeend',
-      `<p class="gen-mode-label">管理員：第 1 組=固定前 6 · 第 2 組=前 10 隨機 · 第 3 組=前 15 隨機</p>`
+      `<p class="gen-mode-label">管理員：第 1 組=固定前 ${pick} · 第 2 組=前 10 隨機 · 第 3 組=前 15 隨機</p>`
     );
-    renderSet(container, [...top6].sort((a, b) => a - b), fixedSpecial, '第 1 組 · 固定', game);
-    renderSet(container, pickUnique(top10, 6), pickRandom(specialTop), '第 2 組 · 前10隨機', game);
-    renderSet(container, pickUnique(top15, 6), pickRandom(specialTop), '第 3 組 · 前15隨機', game);
+    renderSet(container, [...topFixed].sort((a, b) => a - b), fixedSpecial, '第 1 組 · 固定', game);
+    renderSet(container, pickUnique(top10, pick), hasSpecial ? pickRandom(specialTop) : null, '第 2 組 · 前10隨機', game);
+    renderSet(container, pickUnique(top15, pick), hasSpecial ? pickRandom(specialTop) : null, '第 3 組 · 前15隨機', game);
   } else {
     const pool = topN(mainCounts, 10);
     container.insertAdjacentHTML(
@@ -196,8 +227,8 @@ function generate(mode = 'user') {
     for (let i = 0; i < 3; i++) {
       renderSet(
         container,
-        pickUnique(pool, 6),
-        pickRandom(specialTop),
+        pickUnique(pool, pick),
+        hasSpecial ? pickRandom(specialTop) : null,
         `第 ${i + 1} 組`,
         game
       );

@@ -15,8 +15,12 @@ import sys
 import time
 from pathlib import Path
 
+import ssl
 import urllib.request
 import urllib.error
+
+# 台彩 API 為公開資料，跳過 SSL 驗證以避免本機憑證問題
+SSL_CTX = ssl._create_unverified_context()
 
 HERE = Path(__file__).parent
 OUT_FILE = HERE / "data.json"
@@ -31,6 +35,10 @@ GAMES = {
         "endpoint": f"{API_BASE}/SuperLotto638Result",
         "result_key": "superLotto638Res",
     },
+    "daily_cash": {
+        "endpoint": f"{API_BASE}/Daily539Result",
+        "result_key": "daily539Res",
+    },
 }
 
 START_YEAR = 2014
@@ -44,20 +52,31 @@ def http_get(url: str, params: dict) -> dict:
     qs = "&".join(f"{k}={v}" for k, v in params.items())
     full = f"{url}?{qs}"
     req = urllib.request.Request(full, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=15) as resp:
+    with urllib.request.urlopen(req, timeout=15, context=SSL_CTX) as resp:
         return json.loads(resp.read().decode("utf-8"))
 
 
 def parse_record(game: str, item: dict) -> dict | None:
-    """drawNumberSize 結構：前 6 碼一般號（已排序）+ 最後 1 碼特別號/第二區。"""
+    """drawNumberSize 結構：
+    - 大樂透/威力彩：前 6 碼一般號（已排序）+ 最後 1 碼特別號/第二區
+    - 今彩539：5 碼一般號（已排序），無特別號
+    """
     try:
         nums = item.get("drawNumberSize") or []
+        date = (item.get("lotteryDate") or "")[:10]
+        period = str(item.get("period") or "")
+        if game == "daily_cash":
+            if len(nums) < 5:
+                return None
+            return {
+                "period": period,
+                "date": date,
+                "numbers": sorted(int(n) for n in nums[:5]),
+            }
         if len(nums) < 7:
             return None
         main = sorted(int(n) for n in nums[:6])
         special = int(nums[6])
-        date = (item.get("lotteryDate") or "")[:10]
-        period = str(item.get("period") or "")
         if game == "lotto649":
             return {"period": period, "date": date, "numbers": main, "special": special}
         return {"period": period, "date": date, "first_area": main, "second_area": special}
@@ -92,7 +111,7 @@ def load_existing() -> dict:
             return json.loads(OUT_FILE.read_text(encoding="utf-8"))
         except Exception:
             pass
-    return {"updated_at": "", "lotto649": [], "super_lotto": []}
+    return {"updated_at": "", "lotto649": [], "super_lotto": [], "daily_cash": []}
 
 
 def merge(existing: list, new: list) -> list:
@@ -110,7 +129,7 @@ def run(full: bool):
     now = dt.date.today()
 
     if full:
-        existing = {"updated_at": "", "lotto649": [], "super_lotto": []}
+        existing = {"updated_at": "", "lotto649": [], "super_lotto": [], "daily_cash": []}
         start_year, start_month = START_YEAR, 1
     else:
         start_year = now.year if now.month > 1 else now.year - 1
@@ -132,11 +151,16 @@ def run(full: bool):
         existing[game] = merge(existing.get(game, []), collected)
         print(f"[info] {game}: total {len(existing[game])} records")
 
+    total = sum(len(existing.get(g, [])) for g in GAMES.keys())
+    if total == 0:
+        print("[abort] all games returned 0 records, not overwriting data.json")
+        return
+
     existing["updated_at"] = now.isoformat()
     OUT_FILE.write_text(
         json.dumps(existing, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print(f"[done] wrote {OUT_FILE}")
+    print(f"[done] wrote {OUT_FILE} (total {total} records)")
 
 
 if __name__ == "__main__":
