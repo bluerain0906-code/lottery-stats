@@ -3,9 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>台灣彩券歷史數據統計站 — 大樂透 / 威力彩</title>
-  <meta name="description" content="彙整 2014 年起台灣大樂透與威力彩歷史開獎資料，以統計圖表呈現號碼出現次數。純歷史數據呈現，僅供學習與娛樂參考。" />
+  <title>台灣彩券歷史數據統計站 — 大樂透 / 威力彩 / 今彩539</title>
+  <meta name="description" content="彙整 2014 年起台灣大樂透、威力彩與今彩539 歷史開獎資料，以統計圖表呈現號碼出現次數。每週自動更新，包含 13 篇統計知識文章，純歷史數據呈現，僅供學習與娛樂參考。" />
+  <meta name="keywords" content="大樂透,威力彩,今彩539,樂透統計,彩券歷史,開獎號碼,機率,統計分析" />
+  <link rel="canonical" href="https://lottery-stats.zeabur.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="彩券數據站" />
+  <meta property="og:title" content="台灣彩券歷史數據統計站 — 大樂透 / 威力彩 / 今彩539" />
+  <meta property="og:description" content="彙整 2014 年起台灣大樂透、威力彩與今彩539 歷史開獎資料，以統計圖表呈現號碼出現次數。" />
+  <meta property="og:url" content="https://lottery-stats.zeabur.app/" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="台灣彩券歷史數據統計站" />
+  <meta name="twitter:description" content="大樂透、威力彩、今彩539 歷史開獎統計 + 13 篇統計知識專欄。" />
   <link rel="stylesheet" href="style.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://lottery-stats.zeabur.app/#website",
+        "name": "彩券數據站",
+        "alternateName": "台灣彩券歷史數據統計站",
+        "url": "https://lottery-stats.zeabur.app/",
+        "inLanguage": "zh-TW",
+        "description": "彙整 2014 年起台灣大樂透、威力彩與今彩539 歷史開獎資料之統計站"
+      },
+      {
+        "@type": "ItemList",
+        "name": "統計知識專欄",
+        "itemListElement": [
+          {"@type": "ListItem","position":1,"name":"大樂透 vs 威力彩 vs 今彩539 規則比較","url":"https://lottery-stats.zeabur.app/#rule-comparison"},
+          {"@type": "ListItem","position":2,"name":"什麼是冷號熱號","url":"https://lottery-stats.zeabur.app/#cold-hot-numbers"},
+          {"@type": "ListItem","position":3,"name":"讀懂本站的長條圖","url":"https://lottery-stats.zeabur.app/#reading-chart"},
+          {"@type": "ListItem","position":4,"name":"大數法則","url":"https://lottery-stats.zeabur.app/#law-of-large-numbers"},
+          {"@type": "ListItem","position":5,"name":"選號迷思比較","url":"https://lottery-stats.zeabur.app/#picking-myths"},
+          {"@type": "ListItem","position":6,"name":"娛樂預算觀念","url":"https://lottery-stats.zeabur.app/#entertainment-budget"},
+          {"@type": "ListItem","position":7,"name":"如何理解機率","url":"https://lottery-stats.zeabur.app/#probability-intro"},
+          {"@type": "ListItem","position":8,"name":"大樂透期望值深度分析","url":"https://lottery-stats.zeabur.app/#expected-value"},
+          {"@type": "ListItem","position":9,"name":"組合數學","url":"https://lottery-stats.zeabur.app/#combinatorics"},
+          {"@type": "ListItem","position":10,"name":"獨立事件與記憶性","url":"https://lottery-stats.zeabur.app/#independent-events"},
+          {"@type": "ListItem","position":11,"name":"標準差","url":"https://lottery-stats.zeabur.app/#standard-deviation"},
+          {"@type": "ListItem","position":12,"name":"公益金去哪了","url":"https://lottery-stats.zeabur.app/#charity-fund"},
+          {"@type": "ListItem","position":13,"name":"今彩539 規則與機率分析","url":"https://lottery-stats.zeabur.app/#daily-cash-539"}
+        ]
+      }
+    ]
+  }
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -90,43 +136,65 @@
       <section class="articles">
         <h2 class="section-title">統計知識專欄</h2>
 
-        <article class="article">
-          <h3>一、大樂透 vs 威力彩：規則差在哪？</h3>
-          <p>台灣兩大樂透遊戲規則差異不小。<b>大樂透</b>從 1–49 選 6 個號碼，再加 1 個特別號（特別號從剩餘 43 顆中抽出）；頭獎需 6 碼全中。<b>威力彩</b>則分兩區：第一區從 1–38 選 6 個，第二區從 1–8 選 1 個，需兩區全中才是頭獎。</p>
-          <p>從組合數看，大樂透頭獎機率約 1/1398 萬，威力彩約 1/2209 萬。威力彩看似第一區範圍較小，但第二區那顆必須對準，反而比大樂透還難。獎項結構也不同：威力彩有「貳獎」只中第一區 6 碼，機率較高，因此二獎獎金通常相當可觀。</p>
+        <nav class="article-toc" aria-label="文章目錄">
+          <h3 class="toc-title">本頁目錄</h3>
+          <ol class="toc-list">
+            <li><a href="#rule-comparison">大樂透 vs 威力彩 vs 今彩539 規則比較</a></li>
+            <li><a href="#cold-hot-numbers">什麼是「冷號」「熱號」？</a></li>
+            <li><a href="#reading-chart">讀懂本站的長條圖</a></li>
+            <li><a href="#law-of-large-numbers">大數法則</a></li>
+            <li><a href="#picking-myths">選號迷思比較</a></li>
+            <li><a href="#entertainment-budget">娛樂預算觀念</a></li>
+            <li><a href="#probability-intro">如何理解機率</a></li>
+            <li><a href="#expected-value">大樂透期望值深度分析</a></li>
+            <li><a href="#combinatorics">組合數學：1398 萬分之一怎麼算</a></li>
+            <li><a href="#independent-events">獨立事件與記憶性</a></li>
+            <li><a href="#standard-deviation">標準差：看懂正常波動</a></li>
+            <li><a href="#charity-fund">公益金去哪了</a></li>
+            <li><a href="#daily-cash-539">今彩539 規則與機率分析</a></li>
+          </ol>
+        </nav>
+
+        <article class="article" id="rule-comparison">
+          <h3>一、大樂透 vs 威力彩 vs 今彩539：規則差在哪？</h3>
+          <p>台灣三款主力彩券遊戲規則差異不小：</p>
+          <p>• <b>大樂透</b>：從 1–49 選 6 個號碼，再加 1 個特別號（從剩餘 43 顆中抽出）；頭獎需 6 碼全中，機率約 <b>1/1,398 萬</b>。每週二、五開獎。<br />
+          • <b>威力彩</b>：第一區從 1–38 選 6 個，第二區從 1–8 選 1 個，兩區全中才是頭獎；機率約 <b>1/2,209 萬</b>。每週一、四開獎。<br />
+          • <b>今彩539</b>：從 1–39 選 5 個號碼，5 碼全中即為頭獎，機率約 <b>1/57.6 萬</b>，是三款中最易中的。每週一至週六開獎。</p>
+          <p>頭獎機率排序：今彩539 &gt; 大樂透 &gt; 威力彩。但獎金級距也是反過來——威力彩頭獎動輒上億、大樂透數千萬、今彩539 固定 <b>800 萬元</b>。換句話說，越難中、獎金越高；越容易中、獎金越低，這是彩券設計的基本邏輯。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="cold-hot-numbers">
           <h3>二、什麼是「冷號」「熱號」？統計上有意義嗎？</h3>
           <p>坊間常把近期出現多次的號碼稱為「熱號」，很久沒出現的稱為「冷號」。這種分類在統計上只是**歷史頻率**的描述，**不代表未來機率**。每一期開獎都是獨立事件，上一期出不出現，完全不影響下一期。</p>
           <p>所謂「該出來了」「繼續熱」這類說法，在機率論稱為「賭徒謬誤 (Gambler's Fallacy)」。本站圖表呈現的是歷史出現次數，純粹是資料本身，請讀者自行解讀，並理解這些數字僅為娛樂用途。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="reading-chart">
           <h3>三、讀懂本站的長條圖</h3>
           <p>橫軸是號碼（大樂透 1–49、威力彩第一區 1–38），縱軸是**該號碼在選定時間範圍內被開出的總次數**。你可以透過頂部「統計範圍」切換「全部/近三年/近一年」。</p>
           <p>長期來看，所有號碼的出現次數應該接近——這就是大數法則。如果短期觀察看到某些號碼明顯較多或較少，那通常只是樣本量還不夠的隨機波動，不是特別的「趨勢」。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="law-of-large-numbers">
           <h3>四、大數法則：為什麼每個號碼長期都會趨近一致？</h3>
           <p>大數法則 (Law of Large Numbers) 是機率論的基礎：當樣本數趨於無限大，實際頻率會愈來愈接近理論機率。對大樂透來說，每個號碼單期出現機率是 6/49 ≈ 12.24%，理論上抽無限多次後，每個號碼的出現比例都會是這個數字。</p>
           <p>目前台彩自 2014 年起累積約 1,400 多期，樣本還不算大，因此號碼間仍有些差距。但隨期數增加，你會看到長條圖愈來愈「平」。這正是機率與統計的魅力。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="picking-myths">
           <h3>五、選號迷思：生日、車牌、統計熱號哪個比較準？</h3>
           <p>坦白說：**都一樣準，也都一樣不準**。每組號碼中頭獎的機率完全相同，不因「來源」而改變。但選號的「策略」確實會影響你中獎後的**獎金分配**。</p>
           <p>例如用生日（1–31）選號的人非常多，若你中獎剛好用的是生日範圍，很可能與多人平分。相反地，若你選了比較「沒人選」的號碼（例如大於 31 的數字），中獎後平分人數反而較少。這是行為經濟學角度的差異，不是機率差異。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="entertainment-budget">
           <h3>六、理性看待樂透：娛樂預算的觀念</h3>
           <p>樂透的期望值在數學上為負：你每投入一塊錢，長期回報會小於一塊錢。這是設計上的必然（獎金要扣管理費、公益金、稅）。把樂透當「投資」長期來看必然虧損，但當成「付費的刺激體驗」就合理。</p>
           <p>建議做法：把樂透納入「娛樂預算」而非「財務計畫」。每月設定一個你輸光也不心痛的金額（例如 200–500 元），即使全數沒中，就當作買了一張看煙火的票。這樣既保留期待的樂趣，也不會影響生活。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="probability-intro">
           <h3>七、如何理解「機率」：從擲硬幣到大樂透</h3>
           <p>機率是現代生活中最常被誤用的數學概念。它既簡單（小學就學過）又抽象（連數學家都在辯論其本質）。理解機率幾乎是看懂彩券這類遊戲的唯一鑰匙。</p>
           <p><b>古典定義</b>：某事件發生的「可能性占所有可能事件的比例」。擲一枚公平硬幣出現正面的機率是 1/2，擲一顆公平骰子出現 6 的機率是 1/6。這是最早、最直觀的機率定義。</p>
@@ -135,7 +203,7 @@
           <p><b>反直覺的小機率</b>：人腦不擅長處理極小機率。你會覺得「總有機會」，但數學上，即使你每天買一張大樂透，平均要連續買 38,000 年才中一次頭獎。接受不確定性，是理解機率最重要的一堂課。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="expected-value">
           <h3>八、大樂透期望值深度分析</h3>
           <p>期望值 (Expected Value, EV) 是決策科學的核心概念，計算方式是：<b>所有可能結果 × 對應機率的總和</b>。期望值大於成本，理論上該玩；小於成本，長期必輸。</p>
           <p>以大樂透為例，假設頭獎 1 億元（不累積），中獎機率 1/1398 萬。單看頭獎，期望值約等於 100,000,000 ÷ 13,983,816 ≈ 7.15 元。加上貳獎、參獎等其他獎項（貢獻約 3–5 元），總期望值約 10–12 元。彩券售價 50 元，**每買一張的數學期望損失約為 38–40 元**（損失率約 76%）。</p>
@@ -144,7 +212,7 @@
           <p>結論：彩券是娛樂消費，不是投資工具。把期望值損失當作「買希望」的代價，才是理性的財務觀。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="combinatorics">
           <h3>九、組合數學：1398 萬分之一怎麼算出來的</h3>
           <p>大樂透頭獎機率是 13,983,816 分之一，這個精確的數字從哪來？答案在高中數學課的組合公式：<code>C(n,k) = n! / (k! × (n-k)!)</code></p>
           <p>套入大樂透規則（49 選 6）：C(49, 6) = 49! / (6! × 43!)。展開計算：<br />
@@ -156,7 +224,7 @@
           <p>這就是為什麼統計學家對彩券的態度一貫保守：**數學上它設計得就是讓你輸**。這也解釋了為何「統計熱號」在長期機率上毫無優勢——每個組合被抽中的機率都是 1/1398 萬，完全一致。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="independent-events">
           <h3>十、獨立事件與記憶性：樂透為什麼「沒有記憶」</h3>
           <p>統計學有一個容易被忽略、但極重要的概念：<b>獨立事件</b>。兩個事件獨立的意思是——一個事件的發生與否，完全不影響另一個事件的機率。</p>
           <p>樂透開獎就是典型的獨立事件。上一期開出 7、15、23，下一期開出這些號碼的機率，**跟從未出現過的號碼完全一樣**——都是 6/49。這個性質有時被稱為「樂透沒有記憶」。</p>
@@ -165,7 +233,7 @@
           <p><b>為什麼人類容易搞錯？</b> 演化上我們的大腦善於在資料中找「pattern」，即使沒有 pattern，也會腦補。這在遠古時期救了我們（看到草叢動就跑），但在機率問題上反而是誤導。承認隨機就是隨機，是科學思維的重要一步。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="standard-deviation">
           <h3>十一、標準差：看懂長條圖的「正常波動」</h3>
           <p>看本站長條圖，你會發現號碼出現次數不完全相等——有些號碼看起來比別人多出現幾次。這是不是代表那些號碼「比較常開」？答案是：**很可能只是隨機波動**。要判斷，就需要懂一點「標準差」。</p>
           <p><b>什麼是標準差</b>：衡量資料偏離平均值的程度。標準差小表示資料集中，大表示分散。對於獨立同分布的事件，標準差有可計算的理論值。</p>
@@ -174,7 +242,7 @@
           <p>換句話說，即使「最熱號」與「最冷號」差距 50 次以上，在 1,393 期的樣本量下仍屬於正常範圍，**不能推論出任何號碼比較容易中**。這就是為什麼統計學家不相信冷熱號選號法——數學上它就是隨機雜訊。</p>
         </article>
 
-        <article class="article">
+        <article class="article" id="charity-fund">
           <h3>十二、公益金去哪了：你買彩券支持的公共事業</h3>
           <p>很多人不知道，台灣買彩券的錢有一大部分流向公益。根據台灣彩券公司公開資訊，彩券營收的分配大致如下：</p>
           <p>• <b>獎金</b>：約 56%（以大樂透為例）<br />
@@ -185,6 +253,35 @@
           <p><b>公益金用在哪</b>：依《公益彩券發行條例》，盈餘分配給內政部社福、衛福部、勞動部等單位，主要用途包括身心障礙者福利、老人福利、兒童福利、急難救助、身心障礙機構補助等。2023 年全台公益彩券盈餘約 160 億元，約 50% 撥給地方政府社福預算。</p>
           <p><b>從社會角度看彩券</b>：彩券本質上是一種「累進稅」——低收入戶購買比例通常較高，因此也被批評為「窮人稅」。但另一面，彩券提供的公益金確實支撐了大量社會福利預算。一體兩面。</p>
           <p><b>對你的意義</b>：下次你投入 50 元買彩券，即使沒中，也有約 11.5 元流向社福、4 元左右流向政府稅收。把它理解為「付費娛樂 + 被動公益捐款」，或許心態會更平衡。</p>
+        </article>
+
+        <article class="article" id="daily-cash-539">
+          <h3>十三、今彩539 遊戲規則與機率分析</h3>
+          <p>今彩539 是台彩三大主流遊戲中最「親民」的一款，規則最簡單、開獎最頻繁、中獎相對容易，因此深受小額娛樂玩家喜愛。</p>
+          <p><b>遊戲規則</b><br />
+          從 1 至 39 中選出 5 個號碼，開獎也是 5 個號碼，對中幾個決定獎項。<br />
+          • <b>頭獎</b>：5 碼全中，<b>固定 800 萬元</b><br />
+          • <b>貳獎</b>：中 4 碼，固定 2 萬元<br />
+          • <b>參獎</b>：中 3 碼，固定 300 元<br />
+          • <b>肆獎</b>：中 2 碼，固定 50 元<br />
+          每注 50 元，可電腦選號或自選。</p>
+          <p><b>開獎時間</b><br />
+          週一至週六每晚約 20:30 開獎（週日休息），比大樂透、威力彩多出許多場次，一週可玩 6 次。</p>
+          <p><b>機率計算</b><br />
+          頭獎組合數為 C(39, 5) = 575,757 種，頭獎機率約 <b>0.000174%</b>（1/57.6 萬）。相對大樂透 1/1398 萬、威力彩 1/2209 萬，中頭獎機率高出約 <b>24–38 倍</b>。但獎金固定 800 萬，不會累積，也就沒有「頭獎連槓暴增」的戲劇性。</p>
+          <p><b>各獎項機率（參考值）</b><br />
+          • 頭獎：約 1/57.6 萬<br />
+          • 貳獎：約 1/3,386<br />
+          • 參獎：約 1/103<br />
+          • 肆獎：約 1/9.6（約 10% 機會中獎）<br />
+          綜合來看，一般人每投 10 張大概會中 1 張肆獎（50 元回本），這種「常中小獎」的體感是 539 黏著力強的原因之一。</p>
+          <p><b>期望值</b><br />
+          單張成本 50 元，粗估各獎項期望值加總約 25–30 元（實際依銷售量變動）。也就是每投 50 元，數學期望損失約 20–25 元（損失率 40–50%）。整體期望值為負，但比大樂透、威力彩的 76% 損失率要溫和許多，數學上是三款中「相對划算」的娛樂選擇。</p>
+          <p><b>適合什麼樣的人</b><br />
+          • 想每天有小期待、不追求中億元大獎的人<br />
+          • 喜歡小額且高頻次的娛樂方式<br />
+          • 想嘗試多種下注策略的人（週一至週六都可下手）<br />
+          重要的是：把它當娛樂，不當投資，設好每月娛樂預算上限。</p>
         </article>
       </section>
     </main>
