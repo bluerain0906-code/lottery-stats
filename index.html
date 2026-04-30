@@ -61,7 +61,6 @@
   }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1639909751086011" crossorigin="anonymous"></script>
 </head>
 <body>
   <header class="site-header">
@@ -147,9 +146,9 @@
           </div>
           <div class="gen-btn-group">
             <button id="genBtn" class="primary admin-only">統計取樣（管理員）</button>
-            <button id="adGateBtn" class="ad-gate-btn">📺 看廣告取樣（免費）</button>
+            <button id="adGateBtn" class="ad-gate-btn">🎲 統計取樣</button>
             <a href="/auth/line/login" class="line-login-btn user-only">
-              <span class="line-icon">L</span> 管理員以 LINE 登入（無廣告）
+              <span class="line-icon">L</span> 管理員以 LINE 登入
             </a>
           </div>
           <div id="genResult" class="gen-result"></div>
@@ -309,17 +308,7 @@
         </article>
       </section>
     </main>
-
-    <!-- 桌機右側廣告 -->
-    <aside class="ad-slot ad-right" aria-label="廣告區">
-      <div class="ad-placeholder">廣告區<br /><small>160×600</small></div>
-    </aside>
   </div>
-
-  <!-- 底部橫幅廣告 -->
-  <section class="ad-bottom">
-    <div class="ad-placeholder wide">廣告區<br /><small>728×90 / 手機自適應</small></div>
-  </section>
 
   <footer>
     <p class="disclaimer">
@@ -337,24 +326,6 @@
     <p>聯絡我們：LINE <b>AIRORTON</b></p>
     <p class="copyright">© 2026 彩券數據站</p>
   </footer>
-
-  <div class="ad-modal" id="adModal" aria-hidden="true">
-    <div class="ad-modal-backdrop"></div>
-    <div class="ad-modal-box">
-      <div class="ad-modal-header">
-        <span class="ad-modal-title">廣告</span>
-        <span class="ad-countdown" id="adCountdown">5 秒後可關閉</span>
-      </div>
-      <div class="ad-content" id="adContent">
-        <!-- AdSense 通過後置換為 <ins class="adsbygoogle">，目前為佔位 -->
-        <div class="ad-placeholder-box">
-          <div>廣告區</div>
-          <small>（待 AdSense 通過後此處顯示實際廣告）</small>
-        </div>
-      </div>
-      <button class="ad-close-btn" id="adCloseBtn" disabled>請稍候…</button>
-    </div>
-  </div>
 
   <script src="app.js"></script>
   <script src="line-modal.js"></script>
