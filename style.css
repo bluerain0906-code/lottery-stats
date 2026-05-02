@@ -81,7 +81,9 @@ body {
 
 /* 左側合作推薦卡 */
 .partner-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
   position: sticky;
   top: 70px;
   background: #fff;
@@ -93,6 +95,7 @@ body {
   transition: transform 0.15s, box-shadow 0.15s;
   border: 1px solid #e5e7eb;
 }
+.partner-card .partner-info { margin-top: auto; }
 .partner-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
