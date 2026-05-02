@@ -589,7 +589,7 @@ footer p { margin: 6px 0; }
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 240px;
+  min-height: 600px;
   border: 1px dashed #d1d5db;
   border-radius: 10px;
   background: #fafafa;
