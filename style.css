@@ -582,37 +582,3 @@ footer p { margin: 6px 0; }
   border-radius: 6px;
 }
 .copyright { font-size: 0.75rem; color: #9ca3af; }
-
-/* 廣告位（蝦皮分潤等）— 預留高度避免 CLS，貼入嵌入碼後自然填滿 */
-.ad-slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 24px auto;
-  width: 100%;
-  max-width: 728px;
-  min-height: 120px;
-  border: 1px dashed #d1d5db;
-  border-radius: 8px;
-  background: #fafafa;
-  color: #9ca3af;
-  font-size: 0.85rem;
-  position: relative;
-}
-.ad-slot:has(iframe), .ad-slot:has(img), .ad-slot:has(script + *) {
-  border: none;
-  background: transparent;
-  min-height: auto;
-}
-.ad-slot:has(iframe) .ad-label,
-.ad-slot:has(img) .ad-label { display: none; }
-.ad-label {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: #b0b6bf;
-}
-.ad-slot-top { margin-top: 16px; }
-.ad-slot-bottom { margin-bottom: 16px; }
-@media (max-width: 600px) {
-  .ad-slot { min-height: 90px; max-width: 100%; }
-}
