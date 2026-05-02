@@ -582,3 +582,30 @@ footer p { margin: 6px 0; }
   border-radius: 6px;
 }
 .copyright { font-size: 0.75rem; color: #9ca3af; }
+
+/* 右側廣告欄 placeholder（貼入蝦皮嵌入碼後虛線框自動消失） */
+.ad-right { position: sticky; top: 70px; align-self: start; }
+.shopee-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  border: 1px dashed #d1d5db;
+  border-radius: 10px;
+  background: #fafafa;
+}
+.shopee-placeholder:has(iframe),
+.shopee-placeholder:has(img),
+.shopee-placeholder:has(a) {
+  border: none;
+  background: transparent;
+  min-height: auto;
+}
+.shopee-placeholder:has(iframe) .shopee-placeholder-label,
+.shopee-placeholder:has(img) .shopee-placeholder-label,
+.shopee-placeholder:has(a) .shopee-placeholder-label { display: none; }
+.shopee-placeholder-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: #b0b6bf;
+}
